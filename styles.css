@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    background: grey;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  #dashboard {
+    width: auto;
+    height: auto;
+  }
+  .card{
+    margin: auto;
+    border: 3px black;
+    /* padding: 10px; */
+    width: auto;
+    max-width: fit-content;
+    background: linear-gradient(#8ff7ef,#4085f5);
+    color: black;
+    margin: auto;
+    border-radius: 20px;
+    padding: 40px 35px;
+    text-align: center;
+}
+  .dt_details{
+    /* background: #4085f5; */
+    border: 0;
+    outline: none;
+    background: antiquewhite;
+    padding: 10px 15px;
+    height: auto;
+    border-radius: 10px;
+    flex: 1;
+    margin-right: 10px;
+    font-size: small;
+  }
