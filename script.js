@@ -4,6 +4,9 @@ var data;
 
 const date_element = document.getElementById("date_time");
 const weather_element = document.getElementById("weather");
+const news_element = document.getElementById("news");
+const currency_element = document.getElementById("currency");
+const quotes_element = document.getElementById("quote");
 
 function refresh_window() {
     window.setTimeout(function () {
@@ -24,7 +27,50 @@ async function get_weather() {
     weather_element.innerHTML = data.name + " temp: " + data.main.temp + "°c" + ", Airspace: " + data.weather[0].main;
 }
 
+//news
+async function get_NEWS() {
+    const response = await fetch(NEWS_CONFIG.API_URL + NEWS_CONFIG.API_KEY + "&q=canada&language=en");
+
+    data = await response.json();
+
+    if (data.status === 'success') {
+        
+        news_element.innerHTML = `<p> ${data.results[0].title}<p><br>
+                                    <p> ${data.results[1].title} <p><br>
+                                    <p> ${data.results[2].title}<p>`;
+    }
+    else {
+        console.log("Try Again");
+    }
+}
+
+//currency
+async function get_currencyRates() {
+    const response = await fetch(CURRENCY_CONFIG.API_URL+CURRENCY_CONFIG.API_KEY+"/pair/USD/INR");
+    data = await response.json();
+
+    if(data.result === 'success'){
+        currency_element.innerHTML = "Conversion rates: 1 "+data.base_code + " = " +data.conversion_rate + " "+data.target_code + ".";
+    }
+    else{
+        consolse.log("Failed, try again");
+    }
+}
+
+async function get_quotes() {
+    const response =  await fetch(QUOTES_CONFIG.API_URL);
+    data = await response.json();
+
+    // quotes_element.innerHTML = data[0].q;
+    console.log(QUOTES_CONFIG.API_URL);
+    console.log(data);
+
+}
+
 //call functions
-refresh_window();
+// refresh_window();
 update_DateTime();
 get_weather();
+get_NEWS();
+get_currencyRates();
+get_quotes();
