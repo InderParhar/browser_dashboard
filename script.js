@@ -7,6 +7,7 @@ const weather_element = document.getElementById("weather");
 const news_element = document.getElementById("news");
 const currency_element = document.getElementById("currency");
 const quotes_element = document.getElementById("quote_details");
+const location_element = document.getElementById("Address");
 
 function refresh_window() {
     window.setTimeout(function () {
@@ -71,10 +72,25 @@ async function get_quotes() {
                                 <p> ${data[0].author}<p>`
 }
 
+function getlocation(){
+    if(navigator.geolocation){
+        console.log("already exists");
+        navigator.geolocation.getCurrentPosition(showposition);
+    }
+    else{
+        console.log("Does not exist");
+    }
+}
+
+function showposition(position){
+    location_element.innerHTML =  "Latitude is: "+` <p> ${position.coords.latitude}<p> <br>
+                                    Longitude is <p> ${position.coords.longitude} <p>`;
+}
+
 //call functions
 update_DateTime();
 get_weather();
 get_NEWS();
 get_currencyRates();
 get_quotes();
-refresh_window();
+// refresh_window();
