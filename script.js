@@ -1,13 +1,14 @@
 const currentdate = new Date();
 
 var data;
+var latitude;
+var longitude;
 
 const date_element = document.getElementById("date_time");
 const weather_element = document.getElementById("weather");
 const news_element = document.getElementById("news");
 const currency_element = document.getElementById("currency");
 const quotes_element = document.getElementById("quote_details");
-const location_element = document.getElementById("Address");
 
 function refresh_window() {
     window.setTimeout(function () {
@@ -72,20 +73,27 @@ async function get_quotes() {
                                 <p> ${data[0].author}<p>`
 }
 
-function getlocation(){
-    if(navigator.geolocation){
-        console.log("already exists");
-        navigator.geolocation.getCurrentPosition(showposition);
+function getlocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(assign_coords);
     }
-    else{
+    else {
         console.log("Does not exist");
     }
 }
 
-function showposition(position){
-    location_element.innerHTML =  "Latitude is: "+` <p> ${position.coords.latitude}<p> <br>
-                                    Longitude is <p> ${position.coords.longitude} <p>`;
+function assign_coords(position) {
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
 }
+
+async function get_address(){
+    response = await fetch (GOOGLE_MAPS_CONFIG.REVERSE_GEO_API_URL+"latlng="+latitude+","+longitude+"&key="+GOOGLE_MAPS_CONFIG.API_KEY);
+    data = await response.json();
+
+    console.log(data);
+}
+
 
 //call functions
 update_DateTime();
