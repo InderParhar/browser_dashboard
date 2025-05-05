@@ -29,10 +29,10 @@ function update_DateTime() {
 
 //weather
 async function get_weather() {
-    const response = await fetch(Weather_CONFIG.API_URL + "toronto" + "&appid=" + Weather_CONFIG.API_KEY + "&units=metric");
+    const response = await fetch(Weather_CONFIG.API_URL + location_city + "," + location_country_code + "&appid=" + Weather_CONFIG.API_KEY + "&units=metric");
 
     data = await (response).json();
-    weather_element.innerHTML = data.name + " temp: " + data.main.temp + "°c" + ", Airspace: " + data.weather[0].main;
+    weather_element.innerHTML = data.name + ", " + data.sys.country + " Temp: " + data.main.temp + "°c" + ", Airspace: " + data.weather[0].main;
 }
 
 //news
@@ -114,6 +114,8 @@ async function get_address() {
                 }
             }
         }
+
+        get_weather();
     }
     else {
         alert("Got no resposne");
@@ -123,7 +125,7 @@ async function get_address() {
 
 //call functions
 update_DateTime();
-get_weather();
+// get_weather();
 get_NEWS();
 get_currencyRates();
 get_quotes();
