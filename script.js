@@ -4,6 +4,12 @@ var data;
 var latitude;
 var longitude;
 
+var location_country_name;
+var location_country_code;
+var location_city;
+var location_region;
+
+
 const date_element = document.getElementById("date_time");
 const weather_element = document.getElementById("weather");
 const news_element = document.getElementById("news");
@@ -87,11 +93,30 @@ function assign_coords(position) {
     longitude = position.coords.longitude;
 }
 
-async function get_address(){
-    response = await fetch (GOOGLE_MAPS_CONFIG.REVERSE_GEO_API_URL+"latlng="+latitude+","+longitude+"&key="+GOOGLE_MAPS_CONFIG.API_KEY);
+async function get_address() {
+    response = await fetch(GOOGLE_MAPS_CONFIG.REVERSE_GEO_API_URL + "latlng=" + latitude + "," + longitude + "&key=" + GOOGLE_MAPS_CONFIG.API_KEY);
     data = await response.json();
 
-    console.log(data);
+    //todo: try the same with an helper function
+    if (data.status === 'OK') {
+        for (var i = 0; i < data.results[0].address_components.length; i++) {
+            for (var j = 0; j < data.results[0].address_components[i].types.length; j++) {
+                if (data.results[0].address_components[i].types[j] === 'country') {
+                    location_country_name = data.results[0].address_components[i].long_name;
+                    location_country_code = data.results[0].address_components[i].short_name;
+                }
+                if (data.results[0].address_components[i].types[j] === 'administrative_area_level_3') {
+                    location_city = data.results[0].address_components[i].long_name;
+                }
+                if (data.results[0].address_components[i].types[j] === 'administrative_area_level_1') {
+                    location_region = data.results[0].address_components[i].long_name;
+                }
+            }
+        }
+    }
+    else {
+        alert("Got no resposne");
+    }
 }
 
 
