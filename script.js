@@ -81,23 +81,24 @@ async function get_quotes() {
 
 function getlocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(assign_coords);
+        navigator.geolocation.getCurrentPosition(function (position) {
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+
+            //TODO: try using promise instead of calling it here
+            get_address();
+        });
     }
     else {
         console.log("Does not exist");
     }
 }
 
-function assign_coords(position) {
-    latitude = position.coords.latitude;
-    longitude = position.coords.longitude;
-}
-
 async function get_address() {
     response = await fetch(GOOGLE_MAPS_CONFIG.REVERSE_GEO_API_URL + "latlng=" + latitude + "," + longitude + "&key=" + GOOGLE_MAPS_CONFIG.API_KEY);
     data = await response.json();
 
-    //todo: try the same with an helper function
+    //TODO: try the same with an helper function
     if (data.status === 'OK') {
         for (var i = 0; i < data.results[0].address_components.length; i++) {
             for (var j = 0; j < data.results[0].address_components[i].types.length; j++) {
@@ -117,8 +118,8 @@ async function get_address() {
     else {
         alert("Got no resposne");
     }
+    console.log(location_city);
 }
-
 
 //call functions
 update_DateTime();
@@ -126,4 +127,3 @@ get_weather();
 get_NEWS();
 get_currencyRates();
 get_quotes();
-// refresh_window();

@@ -8,7 +8,7 @@
     <!-- <link rel="stylesheet" href="styles.css"> -->
 </head>
 
-<body class="bg-gray-100 font-sans">
+<body class="bg-gray-100 font-sans" onload="getlocation()">
     <div class="max-w-4xl mx-auto p-6">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
@@ -47,25 +47,6 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow-lg p-4">
-        <h3 class="text-xl font-semibold text-gray-800"> Location</h3>
-        <button onclick="getlocation()"
-            class="mt-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700 transition duration-200"
-            id="Address">
-            Get Location
-        </button>
-        <p class="Random Location" id="Rand_location"></p>
-    </div>
-
-    <div class="bg-white rounded-lg shadow-lg p-4">
-        <h3 class="text-xl font-semibold text-gray-800"> Location</h3>
-        <button onclick="get_address()"
-            class="mt-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700 transition duration-200"
-            id="Address">
-            Get Address
-        </button>
-        <p class="Random Location" id="Rand_location"></p>
-    </div>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="config.js"></script>
     <script src="script.js"></script>
