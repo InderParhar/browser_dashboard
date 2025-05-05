@@ -37,7 +37,7 @@ async function get_weather() {
 
 //news
 async function get_NEWS() {
-    const response = await fetch(NEWS_CONFIG.API_URL + NEWS_CONFIG.API_KEY + "&q=canada&language=en");
+    const response = await fetch(NEWS_CONFIG.API_URL +location_country_code.toLowerCase() + "&apikey=" + NEWS_CONFIG.API_KEY);
 
     data = await response.json();
 
@@ -116,6 +116,7 @@ async function get_address() {
         }
 
         get_weather();
+        get_NEWS();
     }
     else {
         alert("Got no resposne");
@@ -125,7 +126,5 @@ async function get_address() {
 
 //call functions
 update_DateTime();
-// get_weather();
-get_NEWS();
 get_currencyRates();
 get_quotes();
